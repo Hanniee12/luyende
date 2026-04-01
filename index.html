@@ -690,18 +690,25 @@
     if (type === 'img') {
       bodyContent = `<img src="${url}" onclick="window.open('${url}')" title="Nhấn để mở full size">`;
     } else if (type === 'vid') {
-      bodyContent = `<video controls src="${url}"></video>`;
-    } else if (type === 'pdf') {
       bodyContent = `
-        <iframe src="${url}"></iframe>
-        <a href="${url}" target="_blank" class="download-btn pdf-fallback">
-          <span>↗</span> Mở trong tab mới
-        </a>
+        <video controls crossorigin="anonymous">
+          <source src="${url}">
+        </video>
+      `;
+    } else if (type === 'pdf') {
+      const googleViewer = `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+      bodyContent = `
+        <iframe src="${googleViewer}" style="width:100%;height:600px;border:none;border-radius:12px;"></iframe>
+        <div style="margin-top:14px;">
+          <a href="${googleViewer}" target="_blank" class="download-btn">
+            <span>👁</span> Xem trên Google Docs
+          </a>
+        </div>
       `;
     } else {
       bodyContent = `
         <a href="${url}" target="_blank" class="download-btn">
-          <span>⬇</span> Tải file xuống
+          <span>↗</span> Mở file
         </a>
       `;
     }
